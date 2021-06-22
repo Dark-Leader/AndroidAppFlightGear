@@ -11,10 +11,17 @@ import com.example.ourapp.viewModel.ViewModel
 class MainActivity : AppCompatActivity() {
     private val viewModel: ViewModel = ViewModel(MyModel())
     private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val josystickView = Joystick(this)
+        setContentView(josystickView)
+
+
+
     }
 
 

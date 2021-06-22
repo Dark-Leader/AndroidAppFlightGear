@@ -6,14 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".Views.MainActivity">
 
+
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="350dp"
-        android:orientation="vertical"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:id="@+id/linearLayout">
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/IP"
@@ -21,7 +22,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="IP address"
-            android:inputType="text"/>
+            android:inputType="text" />
 
         <EditText
             android:id="@+id/Port"
@@ -29,13 +30,37 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Port number"
-            android:inputType="text"/>
+            android:inputType="text" />
 
         <Button
             android:id="@+id/Connect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/Connect" />
+
+
     </LinearLayout>
+
+
+
+    <SeekBar
+        android:id="@+id/seekBarvertical_throttle"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="370dp"
+        android:layout_marginHorizontal="50dp"
+        android:rotation="270"
+
+
+        />
+
+
+
+    <SeekBar
+        android:id="@+id/seekBarHorizontal_rudder"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="500dp" />
+
 
 </RelativeLayout>
