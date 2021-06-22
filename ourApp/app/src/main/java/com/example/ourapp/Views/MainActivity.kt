@@ -6,9 +6,10 @@ import android.widget.Button
 import android.widget.EditText
 import com.example.ourapp.databinding.ActivityMainBinding
 import com.example.ourapp.model.MyModel
+import com.example.ourapp.viewModel.ViewModel
 
 class MainActivity : AppCompatActivity() {
-    private var model: MyModel = MyModel()
+    private val viewModel: ViewModel = ViewModel(MyModel())
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
