@@ -10,10 +10,10 @@ class MyModel {
     var ip: String = ""
     var port: Int = -1
 
-    var throttle: Double = 0.0
-    var rudder: Double = 0.0
-    var aileron: Double = 0.0
-    var elevator: Double = 0.0
+    var throttle: Float = 0f
+    var rudder: Float = 0f
+    var aileron: Float = 0f
+    var elevator: Float = 0f
     var fps: Int = 60
 
     private var connected: Boolean = false
