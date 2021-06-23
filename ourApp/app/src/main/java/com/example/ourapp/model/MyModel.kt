@@ -20,11 +20,15 @@ class MyModel {
 
      fun connectToServer(): Boolean {
         try {
+            println("Inside model: ip is $ip")
+            println("Inside model: port is $port")
             val socket = Socket(ip, port)
             val outputStream: OutputStream = socket.getOutputStream()
             connected = true
+            println("Connected to $ip, $port")
             thread { run(outputStream) }
         } catch (e: Exception) {
+            println("FAILED TO CONNECT")
             return false
         }
          return true

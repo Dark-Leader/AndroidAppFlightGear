@@ -24,7 +24,7 @@
                 android:ems="10"
                 android:text=""
                 android:hint="IP address"
-                android:inputType="text" />
+                android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/Port"
@@ -33,13 +33,14 @@
                 android:ems="10"
                 android:text=""
                 android:hint="Port number"
-                android:inputType="text" />
+                android:inputType="textPersonName" />
 
             <Button
                 android:id="@+id/Connect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/Connect" />
+                android:text="@string/Connect"
+                />
 
         </LinearLayout>
         <RelativeLayout
@@ -47,11 +48,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="50dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="75dp"
+            android:layout_marginRight="75dp"
             android:layout_marginTop="175dp"
-            android:layout_marginStart="75dp"
-            android:layout_marginLeft="75dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             >
 
             <com.example.ourapp.Views.Joystick
@@ -63,13 +64,15 @@
         </RelativeLayout>
 
         <SeekBar
-            android:id="@+id/seekBarHorizontal_rudder"
+            android:id="@+id/seekBarRudder"
             android:layout_width="match_parent"
             android:layout_height="22dp"
             android:layout_marginTop="645dp"
-            android:progress="50"
+            android:progress="100"
+            android:max="200"
             >
         </SeekBar>
+
 
 
     </RelativeLayout>
