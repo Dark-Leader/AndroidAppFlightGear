@@ -1,11 +1,8 @@
 package com.example.ourapp.Views
 
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.SeekBar
+import android.widget.*
 import android.widget.SeekBar.OnSeekBarChangeListener
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ourapp.R
 import com.example.ourapp.model.MyModel
@@ -18,7 +15,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var IP: EditText
     private lateinit var Port: EditText
     private lateinit var rudder: SeekBar
-    private lateinit var throttle: SeekBar
+    private lateinit var throttle: VerticalSeekBar
     private lateinit var connectButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,11 +35,22 @@ class MainActivity : AppCompatActivity() {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 viewModel.updateRudder(progress)
             }
-
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
                 return
             }
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                return
+            }
+        })
 
+        throttle = findViewById(R.id.SeekBarThrottle)
+        throttle.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                viewModel.updateThrottle(progress)
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                return
+            }
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 return
             }

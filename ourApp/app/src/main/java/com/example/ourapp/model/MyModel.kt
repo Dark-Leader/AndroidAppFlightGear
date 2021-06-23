@@ -19,8 +19,15 @@ class MyModel {
 
     private var connected: Boolean = false
 
-     fun connectToServer() {
-         thread { run() }
+    fun connectToServer(): Boolean {
+        return try {
+            thread { run() }
+            println("SUCCESS")
+            true
+        } catch (e: Exception) {
+            println("ERROR")
+            false
+        }
     }
 
     private fun run() {
@@ -31,10 +38,10 @@ class MyModel {
             connected = true
             println("CONNECTED TO $ip, $port")
             while (connected) {
+                write("set /controls/engines/current-engine/throttle $throttle\r\n", outputStream)
                 write("set /controls/flight/aileron $aileron\r\n", outputStream)
                 write("set /controls/flight/elevator $elevator\r\n", outputStream)
                 write("set /controls/flight/rudder $rudder\r\n", outputStream)
-                write("set /controls/flight/current-engine/throttle $throttle\r\n", outputStream)
                 Thread.sleep((1000 / fps).toLong())
             }
         } catch (e: Exception) {
