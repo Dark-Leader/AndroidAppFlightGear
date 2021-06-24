@@ -1,12 +1,12 @@
 package com.example.ourapp.Views
+
+
 import android.content.Context
-import android.view.View
-
-
+import android.content.res.Resources
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
-import java.util.jar.Attributes
+import android.view.View
 
 class Joystick @JvmOverloads constructor(
     context: Context, atts: AttributeSet? = null, defStyleAttr: Int = 0)
@@ -20,6 +20,12 @@ class Joystick @JvmOverloads constructor(
     }
     private lateinit var extraCanvas: Canvas
     private var radius: Float = 200f
+    private var centerX: Float = 0f
+    private var centerY: Float = 0f
+    lateinit var func: (Float, Float) -> Unit
+    private var screenWidth :Int = Resources.getSystem().displayMetrics.widthPixels
+    private var screenHeight: Int = Resources.getSystem().displayMetrics.heightPixels
+
     private var center: PointF = PointF()
 //to change.
 
@@ -31,7 +37,7 @@ class Joystick @JvmOverloads constructor(
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         if (event == null) {
-            return true
+            return false
         }
         when (event?.action) {
             MotionEvent.ACTION_MOVE -> touchMove(event.x, event.y)
@@ -41,15 +47,30 @@ class Joystick @JvmOverloads constructor(
     }
 
     private fun touchMove(x: Float, y: Float) {
-        center = PointF(x,y)
+        if (x < 0) {
+            centerX = 0f
+        } else if (x > width) {
+            centerX = width.toFloat()
+        } else {
+            centerX = x
+        }
+
+        if (y < 0) {
+            centerY = 0f
+        } else if (y > height) {
+            centerY = height.toFloat()
+        } else {
+            centerY = y
+        }
+
+        center = PointF(centerX,centerY)
+        func(centerX,centerY)
         invalidate()
     }
-
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvas.drawCircle(center.x, center.y, radius, paint)
-
     }
 
 

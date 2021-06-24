@@ -1,6 +1,7 @@
 package com.example.ourapp.Views
 
 import android.os.Bundle
+import android.view.View
 import android.widget.*
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var rudder: SeekBar
     private lateinit var throttle: VerticalSeekBar
     private lateinit var connectButton: Button
+    private lateinit var joystick: Joystick
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +58,13 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-    }
+        joystick = findViewById(R.id.Joystick)
 
+        joystick.func = { aileron: Float, elevator: Float ->
+            viewModel.updateAileron(aileron, joystick.width)
+            viewModel.updateElevator(elevator, joystick.height)
+        }
+
+    }
 
 }

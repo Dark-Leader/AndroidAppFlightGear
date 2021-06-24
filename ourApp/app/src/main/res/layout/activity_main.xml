@@ -55,19 +55,22 @@
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         >
-        <RelativeLayout
+        <LinearLayout
             tools:context=".Views.Joystick"
+            android:id="@+id/JoystickSize"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="75dp"
             >
             <com.example.ourapp.Views.Joystick
+                android:id="@+id/Joystick"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                >
 
             </com.example.ourapp.Views.Joystick>
 
-        </RelativeLayout>
+        </LinearLayout>
 
         <VerticalSeekBar
             android:id="@+id/SeekBarThrottle"

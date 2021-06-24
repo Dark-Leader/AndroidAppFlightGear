@@ -19,15 +19,8 @@ class MyModel {
 
     private var connected: Boolean = false
 
-    fun connectToServer(): Boolean {
-        return try {
-            thread { run() }
-            println("SUCCESS")
-            true
-        } catch (e: Exception) {
-            println("ERROR")
-            false
-        }
+    fun connectToServer() {
+        thread { run() }
     }
 
     private fun run() {

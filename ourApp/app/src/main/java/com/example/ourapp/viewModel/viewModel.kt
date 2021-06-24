@@ -32,14 +32,12 @@ class ViewModel (private val model: MyModel) {
 
     var throttle: Float = 0f
         set(value) {
-            println("throttle value is: $value")
             model.throttle = value
             field = value
         }
 
     var rudder: Float = 0f
         set(value) {
-            println("rudder value is: $value")
             model.rudder = value
             field = value
         }
@@ -59,12 +57,12 @@ class ViewModel (private val model: MyModel) {
 
     }
 
-    fun updateElevator(progress: Int) {
-        elevator = ((progress - 100).toFloat() / 100)
+    fun updateElevator(value: Float, height: Int) {
+        elevator = -(value - height.toFloat() / 2) / (height.toFloat() / 2)
     }
 
-    fun updateAileron(progress: Int) {
-        aileron = ((progress - 100).toFloat() / 100)
+    fun updateAileron(value: Float, width: Int) {
+        aileron = (value - width.toFloat() / 2) / (width.toFloat() / 2)
     }
 
 }
