@@ -1,14 +1,13 @@
 package com.example.ourapp.Views
 
 import android.os.Bundle
-import android.view.View
 import android.widget.*
 import android.widget.SeekBar.OnSeekBarChangeListener
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ourapp.R
 import com.example.ourapp.model.MyModel
 import com.example.ourapp.viewModel.ViewModel
-import kotlin.concurrent.thread
 
 
 class MainActivity : AppCompatActivity() {
@@ -31,6 +30,16 @@ class MainActivity : AppCompatActivity() {
             var port:String = Port.text.toString()
             println("trying to connect. IP: $ip, Port: $port")
             viewModel.connectToFG(ip, port)
+            Thread.sleep(250)
+            if (viewModel.model.Connected() == false) {
+                val alertDialog = AlertDialog.Builder(this@MainActivity).create()
+                alertDialog.setTitle("ERROR")
+                alertDialog.setMessage("Failed to connect\nPlease try again")
+                alertDialog.setButton(
+                    AlertDialog.BUTTON_NEUTRAL, "OK"
+                ) { dialog, which -> dialog.dismiss() }
+                alertDialog.show()
+            }
         }
         rudder = findViewById(R.id.seekBarRudder)
         rudder.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {

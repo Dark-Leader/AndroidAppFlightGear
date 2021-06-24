@@ -16,8 +16,7 @@ class MyModel {
     var elevator: Float = 0f
     var fps: Int = 60
     private var socket: Socket? = null
-
-    private var connected: Boolean = false
+    var connected = false
 
     fun connectToServer() {
         thread { run() }
@@ -28,9 +27,10 @@ class MyModel {
         try {
             socket = Socket(ip, port)
             var outputStream: OutputStream = socket!!.getOutputStream()
-            connected = true
+            var ok = socket!!.isConnected
             println("CONNECTED TO $ip, $port")
-            while (connected) {
+            connected = true
+            while (ok) {
                 write("set /controls/engines/current-engine/throttle $throttle\r\n", outputStream)
                 write("set /controls/flight/aileron $aileron\r\n", outputStream)
                 write("set /controls/flight/elevator $elevator\r\n", outputStream)
@@ -40,6 +40,7 @@ class MyModel {
         } catch (e: Exception) {
             println("ERROR")
             println(e.message)
+            connected = false
             return
         }
     }
@@ -47,5 +48,9 @@ class MyModel {
     private fun write(command: String, outputStream: OutputStream) {
         outputStream.write(command.toByteArray(Charset.defaultCharset()))
         outputStream.flush()
+    }
+
+    fun Connected(): Boolean? {
+        return connected
     }
 }

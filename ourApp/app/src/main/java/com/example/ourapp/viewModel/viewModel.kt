@@ -1,8 +1,7 @@
 package com.example.ourapp.viewModel
-import android.widget.SeekBar
 import com.example.ourapp.model.MyModel
 
-class ViewModel (private val model: MyModel) {
+class ViewModel ( val model: MyModel) {
 
     var IP: String = ""
         set(value) {
