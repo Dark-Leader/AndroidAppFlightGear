@@ -18,7 +18,7 @@ Using the features above allow us to flight the simulator using the app.
 
 
 **Requirements:**
--Flight simulator (preferably the latest version, not necessary though).
+-Flight simulator,(preferably the latest version, not necessary though).
 -Android studio, (preferably the latest version, not necessary though).
 
 **How To Use:**
