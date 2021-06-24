@@ -48,7 +48,7 @@
         tools:context=".Views.Joystick"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="35dp"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="175dp"
@@ -60,14 +60,13 @@
             android:id="@+id/JoystickSize"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="75dp"
-            >
+            android:layout_marginLeft="25dp"
+            android:layout_marginStart="25dp">
             <com.example.ourapp.Views.Joystick
                 android:id="@+id/Joystick"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 >
-
             </com.example.ourapp.Views.Joystick>
 
         </LinearLayout>
@@ -85,8 +84,8 @@
     <SeekBar
         android:id="@+id/seekBarRudder"
         android:layout_width="match_parent"
-        android:layout_height="22dp"
-        android:layout_marginTop="645dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="655dp"
         android:progress="100"
         android:max="200"
         >
