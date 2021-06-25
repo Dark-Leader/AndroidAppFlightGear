@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             var port:String = Port.text.toString()
             println("trying to connect. IP: $ip, Port: $port")
             viewModel.connectToFG(ip, port) // try to connect to ip, port provided
-            Thread.sleep(250)
+            Thread.sleep(500)
             if (!viewModel.model.connected()) { // if we didn't managed to connect
                 val alertDialog = AlertDialog.Builder(this@MainActivity).create() // create error message
                 alertDialog.setTitle("ERROR")
@@ -82,6 +82,11 @@ class MainActivity : AppCompatActivity() {
             viewModel.updateElevator(elevator, joystick.height) // update elevator
         }
 
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.switchRunningMode() // stop the thread that the model created
     }
 
 }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">our App</string>
+    <string name="app_name">Flight Simulator App</string>
     <string name="Connect">Connect</string>
     <string name="canvasContentDescription"> joystick_check </string>
 </resources>

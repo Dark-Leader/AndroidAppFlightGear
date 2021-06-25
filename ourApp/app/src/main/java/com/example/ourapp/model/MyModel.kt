@@ -3,6 +3,8 @@ package com.example.ourapp.model
 import java.io.OutputStream
 import java.net.Socket
 import java.nio.charset.Charset
+import java.util.concurrent.BlockingQueue
+import java.util.concurrent.LinkedBlockingQueue
 import kotlin.concurrent.thread
 
 
@@ -16,57 +18,114 @@ class MyModel {
     var elevator: Float = 0f
     var fps: Int = 60
     private var socket: Socket? = null
+    private lateinit var outputStream: OutputStream
+    var running: Boolean = true
     var connected = false // flag to check if we managed to connect
+    // queue that will hold the tasks the model will perform
+    private val queue:BlockingQueue<Runnable> = LinkedBlockingQueue()
 
-    fun connectToServer() {
-        /*
-        This function opens a thread, and gives it a function to run.
-         */
-        thread { run() }
+    constructor() { // constructor
+        // open thread and run the runThread function inside it
+        thread{ runThread() }
     }
 
-    private fun run() {
-        /*
-        This function attempts to connect to the pc running flight gear
-        by opening a socket and trying to connect to said pc with
-        the IP,Port fields inside this class
-        if we managed to connect, then we begin an infinite loop, where we send
-        data the socket, in order to update flight gear of the input of the user.
-         */
-        try { // an exception is thrown if
-            // open socket
-            socket = Socket(ip, port)
-            var outputStream: OutputStream = socket!!.getOutputStream()
-            // if we got here then we managed to connect
-            println("CONNECTED TO $ip, $port")
-            connected = true
-            while (socket!!.isConnected) {
-                // update flight gear inside an infinite loop
-                // update about throttle,rudder, aileron,elevator values
-                write("set /controls/engines/current-engine/throttle $throttle\r\n", outputStream)
-                write("set /controls/flight/aileron $aileron\r\n", outputStream)
-                write("set /controls/flight/elevator $elevator\r\n", outputStream)
-                write("set /controls/flight/rudder $rudder\r\n", outputStream)
-                // sleep for 1000 / fps.
-                // at default fps is 60 -> so we update flight gear roughly once every 33 milliseconds
-                Thread.sleep((1000 / fps).toLong())
+    private fun runThread() {
+        // while we want to run the model
+        while (running) {
+            try {
+                queue.take().run() // get runnable from queue and run it
+            } catch (e: Exception) {
+                changeRunningMode() // stop running
             }
-        } catch (e: Exception) { // catch error in the attempt to open a socket from invalid IP or Port
-            println("ERROR")
-            println(e.message)
-            connected = false
-        } finally {
-            /*
-            kill the thread at the end
-            if we managed to connect then we still need to close the thread
-            else if we didn't manage to connect for any reason -> timeout/invalid
-            IP,Port then we kill the thread
-             */
-            Thread.currentThread().join()
         }
     }
 
-    private fun write(command: String, outputStream: OutputStream) {
+    fun changeRunningMode() {
+        // add runnable to queue that will cause the thread to stop running
+        queue.put(Runnable {
+            running = !running
+        })
+    }
+
+    fun attemptToConnect() {
+        /*
+        This function adds a runnable to the queue that will attempt to connect
+        to the IP,Port provided
+         */
+        queue.put(Runnable {
+            try {
+                // try to connect
+                socket = Socket(ip, port)
+                outputStream = socket!!.getOutputStream()
+                println("CONNECTED TO IP: $ip, PORT: $port")
+                // we managed to connect
+                connected = true
+            } catch (e: Exception) {
+                // didn't connect
+                connected = false
+                println(e)
+                println(e.message)
+            }
+        })
+    }
+
+    fun updateRudder(rudderValue: Float) {
+        /*
+        This function adds a runnable to the queue that will update the value of rudder
+        and send the update the flight gear
+         */
+        queue.put(Runnable {
+            if (connected) { // change value and send update to flightgear only if we are already connected
+                rudder = rudderValue
+                val command = "set /controls/flight/rudder $rudder\r\n"
+                write(command)
+            }
+        })
+    }
+
+    fun updateThrottle(throttleValue: Float) {
+        /*
+        This function adds a runnable to the queue that will update the value of throttle
+        and send the update the flight gear
+         */
+        queue.put(Runnable {
+            if (connected) { // change value and send update to flightgear only if we are already connected
+                throttle = throttleValue
+                val command = "set /controls/engines/current-engine/throttle $throttle\r\n"
+                write(command)
+            }
+        })
+    }
+
+    fun updateElevator(elevatorValue: Float) {
+        /*
+        This function adds a runnable to the queue that will update the value of elevator
+        and send the update the flight gear
+         */
+        queue.put(Runnable {
+            if (connected) { // change value and send update to flightgear only if we are already connected
+                elevator = elevatorValue
+                val command = "set /controls/flight/elevator $elevator\r\n"
+                write(command)
+            }
+        })
+    }
+
+    fun updateAileron(aileronValue: Float) {
+        /*
+        This function adds a runnable to the queue that will update the value of aileron
+        and send the update the flight gear
+         */
+        queue.put(Runnable {
+            if (connected) { // change value and send update to flightgear only if we are already connected
+                aileron = aileronValue
+                val command = "set /controls/flight/aileron $aileron\r\n"
+                write(command)
+            }
+        })
+    }
+
+    private fun write(command: String) {
         /*
         helper function to write a string into the OutputStream of a socket
          */

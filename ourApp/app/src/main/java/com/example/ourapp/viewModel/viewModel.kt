@@ -26,25 +26,25 @@ class ViewModel ( val model: MyModel) {
     // value from joystick
     var elevator: Float = 0f
         set(value) {
-            model.elevator = value
+            model.updateElevator(value)
             field = value
         }
     // value from joystick
     var aileron: Float = 0f
         set(value) {
-            model.aileron = value
+            model.updateAileron(value)
             field = value
         }
     // value from vertical seek bar
     var throttle: Float = 0f
         set(value) {
-            model.throttle = value
+            model.updateThrottle(value)
             field = value
         }
     // value from bottom seek bar
     var rudder: Float = 0f
         set(value) {
-            model.rudder = value
+            model.updateRudder(value)
             field = value
         }
 
@@ -54,7 +54,11 @@ class ViewModel ( val model: MyModel) {
          */
         IP = ip
         Port = port
-        model.connectToServer()
+        model.attemptToConnect()
+    }
+
+    fun switchRunningMode() {
+        model.changeRunningMode()
     }
 
     fun updateRudder(progress: Int) {
