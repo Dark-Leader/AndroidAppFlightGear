@@ -15,11 +15,7 @@ class ViewModel ( val model: MyModel) {
             if (value.isEmpty()) {
                 model.port = -1
             } else {
-                try{
-                    model.port = value.toInt()
-                } catch (e: Exception) {
-                    model.port = -1
-                }
+                model.port = value.toInt()
             }
             field = value
         }

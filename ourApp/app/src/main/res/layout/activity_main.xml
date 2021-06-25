@@ -6,7 +6,7 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Views.MainActivity">
+    tools:context=".views.MainActivity">
 
     <LinearLayout
         android:layout_width="350dp"
@@ -24,7 +24,9 @@
             android:ems="10"
             android:text=""
             android:hint="IP address"
-            android:inputType="textPersonName" />
+            android:inputType="number|numberDecimal"
+            android:digits="0123456789."
+            android:maxLength="15"/>
 
         <EditText
             android:id="@+id/Port"
@@ -33,7 +35,8 @@
             android:ems="10"
             android:text=""
             android:hint="Port number"
-            android:inputType="textPersonName" />
+            android:inputType="number"
+            android:maxLength="5"/>
 
         <Button
             android:id="@+id/Connect"
@@ -45,7 +48,7 @@
     </LinearLayout>
     <RelativeLayout
         android:id="@+id/JoystickAndThrottle"
-        tools:context=".Views.Joystick"
+        tools:context=".views.Joystick"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="35dp"
@@ -56,18 +59,18 @@
         android:layout_marginLeft="10dp"
         >
         <LinearLayout
-            tools:context=".Views.Joystick"
+            tools:context=".views.Joystick"
             android:id="@+id/JoystickSize"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="25dp"
             android:layout_marginStart="25dp">
-            <com.example.ourapp.Views.Joystick
+            <com.example.ourapp.views.Joystick
                 android:id="@+id/Joystick"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 >
-            </com.example.ourapp.Views.Joystick>
+            </com.example.ourapp.views.Joystick>
 
         </LinearLayout>
 
