@@ -2,7 +2,6 @@ package com.example.ourapp.Views
 
 
 import android.content.Context
-import android.content.res.Resources
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -15,11 +14,10 @@ class Joystick @JvmOverloads constructor(
     private val paint = Paint().apply {
         style = Paint.Style.FILL_AND_STROKE
         color = Color.GREEN
-        isAntiAlias = true;
+        isAntiAlias = true
 
     }
     // variables for logic
-    private lateinit var extraCanvas: Canvas
     private var radius: Float = 200f
     private var centerX: Float = 0f
     private var centerY: Float = 0f
@@ -36,7 +34,7 @@ class Joystick @JvmOverloads constructor(
          */
         val x = width.toFloat() / 2
         val y = height.toFloat() / 2
-        center = PointF(x, y);
+        center = PointF(x, y)
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -47,7 +45,7 @@ class Joystick @JvmOverloads constructor(
         if (event == null) {
             return false
         }
-        when (event?.action) {
+        when (event.action) {
             // update location
             MotionEvent.ACTION_MOVE -> touchMove(event.x, event.y)
             MotionEvent.ACTION_DOWN -> touchMove(event.x, event.y)

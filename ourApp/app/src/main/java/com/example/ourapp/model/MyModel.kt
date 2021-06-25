@@ -9,6 +9,7 @@ import kotlin.concurrent.thread
 
 
 class MyModel {
+
     var ip: String = "" // ip address of pc running Flightgear
     var port: Int = -1 // port number that Flightgear listens to
     // variables for logic.
@@ -16,7 +17,6 @@ class MyModel {
     var rudder: Float = 0f
     var aileron: Float = 0f
     var elevator: Float = 0f
-    var fps: Int = 60
     private var socket: Socket? = null
     private lateinit var outputStream: OutputStream
     var running: Boolean = true
@@ -24,8 +24,7 @@ class MyModel {
     // queue that will hold the tasks the model will perform
     private val queue:BlockingQueue<Runnable> = LinkedBlockingQueue()
 
-    constructor() { // constructor
-        // open thread and run the runThread function inside it
+    init {
         thread{ runThread() }
     }
 
@@ -53,18 +52,20 @@ class MyModel {
         to the IP,Port provided
          */
         queue.put(Runnable {
-            try {
-                // try to connect
-                socket = Socket(ip, port)
-                outputStream = socket!!.getOutputStream()
-                println("CONNECTED TO IP: $ip, PORT: $port")
-                // we managed to connect
-                connected = true
-            } catch (e: Exception) {
-                // didn't connect
-                connected = false
-                println(e)
-                println(e.message)
+            if (!connected) {
+                try {
+                    // try to connect
+                    socket = Socket(ip, port)
+                    outputStream = socket!!.getOutputStream()
+                    println("CONNECTED TO IP: $ip, PORT: $port")
+                    // we managed to connect
+                    connected = true
+                } catch (e: Exception) {
+                    // didn't connect
+                    connected = false
+                    println(e)
+                    println(e.message)
+                }
             }
         })
     }

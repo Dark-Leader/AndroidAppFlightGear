@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
                 alertDialog.setMessage("Failed to connect\nPlease try again")
                 alertDialog.setButton(
                     AlertDialog.BUTTON_NEUTRAL, "OK"
-                ) { dialog, which -> dialog.dismiss() }
+                ) { dialog, _ -> dialog.dismiss() }
                 alertDialog.show() // display error message
             }
         }
