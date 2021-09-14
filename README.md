@@ -1,4 +1,4 @@
-# EX3 - Android App
+# Android App
 **Flight Simulator App**
 
 
